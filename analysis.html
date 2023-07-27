@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title%}Results{% endblock %}
+{% block content %}
+
+<div class="eval">
+<p>
+<h1>Strength Evaluation:</h1>  <br>  
+<b>Password:
+{{pswd}} <br> 
+The password is {{evaluate}}. </b><br><br>
+<div class="chart-container">
+<canvas id="myChart" ></canvas>
+
+<script>
+    const ctx = document.getElementById('myChart');
+  
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: {{labels | safe}},
+        datasets:[{
+            label: "Score",
+            data: {{values | safe}},
+            borderWidth: 2,
+            backgroundColor: ['#116A7B', '#5C8984','#C2DEDC'],
+            // borderColor: 'black'
+        }]
+        
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  </script>
+  </div>
+  <br><br>
+<b>Uniqueness score:
+{{u_s}} <br>
+Complexity score: 
+{{c_s}} <br>
+Pattern score: 
+{{p_s}} <br> <br>
+</b>
+{%if condition%}
+The password does not meet all requirements.
+It does not have: <br>
+{% for c in condition%}
+<li>{{c}} </li>
+{%endfor%}
+{%endif%}
+<br>
+<h2>SHA-256</h2>
+SHA-256 Hashed Password:
+<b> {{sha_result}}</b> <br><br>
+About: <br>
+SHA 256 is a part of the SHA 2 family of algorithms, where SHA stands for Secure Hash Algorithm. The significance of the 256 in the name stands for the final hash digest value, i.e. irrespective of the size of plaintext/cleartext, the hash value will always be 256 bits.
+The other algorithms in the SHA family are more or less similar to SHA 256. SHA-256 is an algorithm used for hash functions and is a vital component of contemporary cybersecurity. The name SHA-256 refers to the 256-bit long output value of the hash function. SHA-256 is being used today in various applications, including blockchain, cryptocurrency, Secure Sockets Layer (SSL) certificates, and more. 
+<br><br>
+
+<h2>BCRYPT</h2>
+bcrypt Hashed Password:
+<b>{{bcrypt_result}} </b> <br><br>
+About: <br>
+Bcrypt is a password hashing algorithm designed by Niels Provos and David Mazières based on the Blowfish cipher. The name “bcrypt” is made of two parts: b and crypt, where b stands for Blowfish and crypt is the name of the hashing function used by the Unix password system.
+Bcrypt was created as a result of the failure of Crypt to adapt to technology and hardware advancement. Bcrypt is designed to be a slow algorithm, which is a good thing when it comes to password hashing. Therefore, bcrypt is perfect for password hashing because it reduces brute-force attacks.
+<br>
+<!-- <form action="/clear" method="post">
+<p>Check another password: </p>
+<input type="submit" name="clear">
+</form> -->
+</p>
+<br>
+<h2>COMPARISON</h2><br>
+<b>SHA-256 Pros & Cons </b><br><br>
+<li>SHA-256 is faster than Bcrypt</li>
+<li>Implementation is cheaper as less computing power is needed to compute hash values</li>
+<li>Algorithm was not originally designed for password hashing</li>
+<li>Vulnerable to common attacks such as brute-force and rainbow table attacks</li>
+<br><br>
+<b>Bcrypt Pros and Cons</b><br><br>
+<li>Designed for password hashing</li>
+<li>Salting passwords increases the complexity, thus making them more secure</li>
+<li>More expensive to implement due to key distribution</li>
+<li>The hashing process is slower in comparison to SHA-256</li>
+
+
+<br><br>
+<form action="/clear" method="post">
+<input type="submit" value="Try another password" class="btn btn-dark btn-outline-light">
+</form>
+<br><br>
+</div>
+{% endblock %}

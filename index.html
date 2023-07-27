@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title%}Home page{% endblock %}
+{% block content %}
+<div id="Home">
+<form action="#" method="post" class="submit-form" >
+    <p>Enter password: </p>
+    <p><input type="text" name="pw" required autocomplete="off"></p>
+    <p><input type="submit" name="submit" class="btn btn-dark btn-outline-light"></p>
+
+    <img src="{{url_for('static', filename='images/image2.png')}}" alt="">
+
+</form>
+</div>
+{% endblock %}
